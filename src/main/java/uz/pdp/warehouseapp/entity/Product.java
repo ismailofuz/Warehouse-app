@@ -3,6 +3,7 @@ package uz.pdp.warehouseapp.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -23,6 +24,7 @@ public class Product {
     private Category category;
     @ManyToOne
     private Measurement measurement;
-    @ManyToOne
-    private Attachment attachment;
+    @OneToMany
+    @ToString.Exclude
+    private List<Attachment>attachments;
 }
