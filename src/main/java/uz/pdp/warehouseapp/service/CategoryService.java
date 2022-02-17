@@ -33,8 +33,8 @@ public class CategoryService {
                     Category category=new Category(categoryDto.getName(), categoryRepository.getById(categoryDto.getParentCategoryId()),categoryDto.isActive());
                     categoryRepository.save(category);
                 }
-                response.setMessage("Add category");
                 response.setSuccess(true);
+                response.setMessage("Add category");
                 return response;
             }
             response.setMessage("Please choose parent category");

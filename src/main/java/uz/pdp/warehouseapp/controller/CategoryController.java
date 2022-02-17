@@ -32,8 +32,9 @@ public class CategoryController {
 
 
         if(categories.isEmpty()){
-          model.addAttribute("danger","Not found any category");
-      }
+          model.addAttribute("message",new Response("Not found any category",false));
+        }else
+            model.addAttribute("message",new Response("Total category amount: "+categories.size(),true));
         return "/product/categoryOperation";
     }
     @PostMapping(path = "/add")
@@ -45,12 +46,7 @@ public class CategoryController {
         model.addAttribute("categories",categories);
         List<Category> chooseList = categories.stream().filter(Category::isActive).collect(Collectors.toList());
         model.addAttribute("categoriesChoose",chooseList);
-        if(response.isSuccess()){
-            model.addAttribute("success",response.getMessage());
-            return "/product/categoryOperation";
-        }
-        else
-            model.addAttribute("danger",response.getMessage());
+        model.addAttribute("message",response);
         return "/product/categoryOperation";
     }
 }
