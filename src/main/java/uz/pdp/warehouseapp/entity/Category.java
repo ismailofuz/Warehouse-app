@@ -8,7 +8,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 public class Category {
     @Id
@@ -29,5 +28,15 @@ public class Category {
     public Category(String name, boolean active) {
         this.name = name;
         this.active = active;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", parentCategoryId=" + parentCategoryId +
+                ", active=" + active +
+                '}';
     }
 }

@@ -50,4 +50,25 @@ public class CategoryService {
       }
       return false;
   }
+
+    public Category getCategoryByID(Integer id) {
+        return categoryRepository.findById(id).orElse(new Category());
+    }
+    public Response updateCategory(Category category) {
+        Response response=new Response();
+        boolean hasName=false;
+        for (Category category1 : categoryRepository.findAll()) {
+            if(category1.getName().trim().toLowerCase().equals(category.getName().trim().toLowerCase())&&!category1.getId().equals(category.getId())){
+                hasName=true;
+            }
+        }
+        if(!hasName) {
+            categoryRepository.save(category);
+            response.setSuccess(true);
+            response.setMessage("Edite category");
+            return response;
+        }
+        response.setMessage("This name already exist");
+        return response;
+    }
 }
