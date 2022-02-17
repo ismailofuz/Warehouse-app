@@ -18,6 +18,7 @@ public class Product {
     private Integer id;
     @Column(nullable = false,unique = true)
     private String name;
+    @Column(unique = true)
     private String code = String.valueOf(UUID.randomUUID());
     private boolean active=true;
     @ManyToOne

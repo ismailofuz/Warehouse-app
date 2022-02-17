@@ -19,7 +19,8 @@ public class Output {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Date date=Date.valueOf(LocalDate.now());
-    private String code;
+    @Column(unique = true)
+    private String code = String.valueOf(UUID.randomUUID());
     private String factureNumber;
     @ManyToOne
     private Warehouse warehouse;
