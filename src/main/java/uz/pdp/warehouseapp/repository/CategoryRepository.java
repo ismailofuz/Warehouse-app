@@ -1,7 +1,10 @@
 package uz.pdp.warehouseapp.repository;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
+import uz.pdp.warehouseapp.entity.Category;
 
-@Repository
-public interface CategoryRepository {
+import java.util.List;
+
+public interface CategoryRepository extends JpaRepository<Category,Integer> {
 }
