@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,7 +18,8 @@ public class Product {
     private Integer id;
     @Column(nullable = false,unique = true)
     private String name;
-    private String code;
+    @Column(unique = true)
+    private String code = String.valueOf(UUID.randomUUID());
     private boolean active=true;
     @ManyToOne
     private Category category;
