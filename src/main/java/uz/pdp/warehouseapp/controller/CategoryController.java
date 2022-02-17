@@ -35,7 +35,7 @@ public class CategoryController {
           model.addAttribute("message",new Response("Not found any category",false));
         }else
             model.addAttribute("message",new Response("Total category amount: "+categories.size(),true));
-        return "/product/categoryOperation";
+        return "/category/categoryOperation";
     }
     @PostMapping(path = "/add")
     public String addCategory(CategoryDto categoryDto,Model model){
@@ -47,7 +47,7 @@ public class CategoryController {
         List<Category> chooseList = categories.stream().filter(Category::isActive).collect(Collectors.toList());
         model.addAttribute("categoriesChoose",chooseList);
         model.addAttribute("message",response);
-        return "/product/categoryOperation";
+        return "/category/categoryOperation";
     }
     @GetMapping(path = "/edite/{id}")
     public String editeCategory(@PathVariable Integer id, Model model){
@@ -66,7 +66,7 @@ public class CategoryController {
             model.addAttribute("category",category);
         }
         model.addAttribute("message",new Response());
-        return "/product/editeCategory";
+        return "/category/editeCategory";
     }
     @PostMapping(path = "/edite/{id}")
     public String updateCategory(Category category,Model model){
@@ -81,7 +81,7 @@ public class CategoryController {
           model.addAttribute("categoriesChoose",chooseList);
           model.addAttribute("message",response);
 
-          return "/product/categoryOperation";
+          return "/category/categoryOperation";
       }
         Category categoryReturn=categoryService.getCategoryByID(category.getId());
         List<Category> categories=categoryService.getAllCategory();
@@ -96,6 +96,6 @@ public class CategoryController {
         }else {
             model.addAttribute("category",categoryReturn);
         }
-        return "/product/editeCategory";
+        return "/category/editeCategory";
     }
 }
