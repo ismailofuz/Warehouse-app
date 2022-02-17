@@ -16,6 +16,18 @@ public class Category {
     private Integer id;
     @Column(nullable = false,unique = true)
     private String name;
-    private Integer parentCategoryId=0;
+    @ManyToOne()
+    private Category parentCategoryId;
     private boolean active=true;
+
+    public Category(String name, Category parentCategoryId, boolean active) {
+        this.name = name;
+        this.parentCategoryId = parentCategoryId;
+        this.active = active;
+    }
+
+    public Category(String name, boolean active) {
+        this.name = name;
+        this.active = active;
+    }
 }
