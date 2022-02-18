@@ -38,8 +38,8 @@ public class SupplierService {
         if (!byId.isPresent()) {
             return new Response("This supplier not found(id)", false);
         }
-        editSupplier.setName("Jamshid");
-        editSupplier.setPhoneNumber("972541687");
+        editSupplier.setName(supplier.getName());
+        editSupplier.setPhoneNumber(supplier.getPhoneNumber());
         supplierRepository.save(editSupplier);
         return new Response("Successfully edited", true);
     }

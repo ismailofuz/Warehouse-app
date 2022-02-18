@@ -28,7 +28,7 @@ public class User {
     @Column(nullable = false,unique = true)
     private String email;
 
-    private UUID code=UUID.randomUUID();
+    private String code= String.valueOf(UUID.randomUUID());
 
     @Column(nullable = false)
     private String password;

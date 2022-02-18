@@ -9,7 +9,8 @@ import uz.pdp.warehouseapp.service.SupplierService;
 
 import java.util.List;
 
-@RestController("/supplier")
+@RestController()
+@RequestMapping(path = "/supplier")
 public class SupplierController {
     @Autowired
     SupplierService supplierService;
