@@ -16,4 +16,9 @@ public class Measurement {
     @Column(nullable = false,unique = true)
     private String name;
     private boolean active=true;
+
+    public Measurement(String name, boolean active) {
+        this.name = name;
+        this.active = active;
+    }
 }

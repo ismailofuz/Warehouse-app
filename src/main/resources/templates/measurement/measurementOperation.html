@@ -10,9 +10,9 @@
     <div class="row mt-4">
         <div class="col-md-4">
 
-            <form th:action="@{/warehouse/category/add}" method="post" th:object="${categoryDto}">
+            <form th:action="@{/warehouse/measurement/add}" method="post" th:object="${measurementDto}">
         <div class="text-center h4">
-                <label class="form-control" style="background: #37d344">Category add</label>
+                <label class="form-control" style="background: #37d344">Measurement add</label>
             </div>
             <div class="border-secondary" style="background: #006fff">
                 <div class="form-group row m-2">
@@ -20,19 +20,7 @@
                         <label class="btn btn-primary form-control">Name</label>
                     </div>
                     <div class="col-sm-9">
-                        <input class="form-control" th:field="*{name}" placeholder="Category name" required minlength="2">
-                    </div>
-                </div>
-                <div class="form-group row m-2">
-                    <div class="col-sm-3">
-                        <label class="btn btn-primary form-control">Parent Category</label>
-                    </div>
-                    <div class="col-sm-9">
-                        <select class="form-select m-1"  aria-label="Default select example" th:field="*{parentCategoryId}" >
-                            <option th:value="${-1}"  selected>Select Category</option>
-                            <option th:value="${0}"  >No parent category</option>
-                            <option th:each="cat:${categoriesChoose}" th:value="${cat.getId()}"   th:text="${cat.getName()}" ></option>
-                        </select>
+                        <input class="form-control" th:field="*{name}" placeholder="Measurement name" required minlength="1">
                     </div>
                 </div>
 
@@ -45,40 +33,35 @@
                     </div>
                     <div class="btn input-group-text" >
                         <button class="btn btn-primary" type="submit" style="background: white;color: black">Save</button>
-                        <button class="btn border-secondary" type="reset" style="background: gray;">Reset</button>
+                        <button class="btn border-secondary" type="reset" style="background: #5cefde">Reset</button>
                     </div>
                 </div>
             </div>
     </form>
     </div>
-
-    <div class="col-md-8">
-        <table class="table table-bordered" style="max-width: 900px">
-            <div style="max-width: 900px">
+<div class="col-md-1"></div>
+    <div class="col-md-6">
+        <table class="table table-bordered" style="max-width: 600px">
+            <div style="max-width: 600px">
                 <div th:if="${message.isSuccess()!=true}" class="alert-success alert-danger h5 text-center" th:text="${message.getMessage()}" style="text-align: center"></div>
                 <div th:unless="${message.isSuccess()!=true}" class="alert-success h5 text-center" th:text="${message.getMessage()}"></div>
             </div>
             <thead class="table-dark">
             <tr class="text-center">
                 <th >Name</th>
-                <th >Parent Category</th>
                 <th>Active</th>
                 <th>Operation</th>
             </tr>
             </thead>
-            <tr th:each="catg:${categories}">
-                <td class="h6" style="color: darkblue" th:text="${catg.getName()}"></td>
-                <td>
-                    <span  class="h6" style="color: darkblue" th:if="${catg.getParentCategoryId()!=null}" th:text="${catg.getParentCategoryId().getName()}"></span>
-                    <span  class="h6" style="color: darkblue" th:if="${catg.getParentCategoryId()==null}" >No parent category</span>
+            <tr th:each="meas:${measurements}">
+                <td class="h6" style="color: darkblue" th:text="${meas.getName()}"></td>
+                <td class="text-center">
+                    <span class=" btn card-title" style="background: #37d344" th:if="${meas.isActive()==true}">Active</span>
+                    <span class="btn card-title" style="background: rgba(238,152,152,0.99)" th:unless="${meas.isActive()==true}">No_Active</span>
                 </td>
                 <td class="text-center">
-                    <span class=" btn card-title" style="background: #37d344" th:if="${catg.isActive()==true}">Active</span>
-                    <span class="btn card-title" style="background: rgba(238,152,152,0.99)" th:unless="${catg.isActive()==true}">No_Active</span>
-                </td>
-                <td class="text-center">
-                    <a class="btn btn-primary m-2" th:href="@{'/warehouse/category/edite/'+${catg.getId()}}">Edite</a>
-                    <a class="btn btn-secondary" th:href="@{'/warehouse/category/delete/'+${catg.getId()}}" style="background: #e05858">No_Active</a>
+                    <a class="btn btn-primary m-2" th:href="@{'/warehouse/measurement/edite/'+${meas.getId()}}">Edite</a>
+                    <a th:if="${meas.isActive()==true}" class="btn btn-secondary" th:href="@{'/warehouse/measurement/delete/'+${meas.getId()}}" style="background: #e05858">No_Active</a>
                 </td>
             </tr>
         </table>
