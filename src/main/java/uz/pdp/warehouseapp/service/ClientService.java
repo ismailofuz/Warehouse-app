@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uz.pdp.warehouseapp.dto.ClientDto;
 import uz.pdp.warehouseapp.dto.Response;
+import uz.pdp.warehouseapp.entity.Category;
 import uz.pdp.warehouseapp.entity.Client;
 import uz.pdp.warehouseapp.repository.ClientRepository;
 
@@ -15,27 +16,38 @@ public class ClientService {
     @Autowired
     ClientRepository clientRepository;
 
-    public Iterable<Client> get() {
-        return clientRepository.findAll();
+
+    public List<Client> getAll() {
+       return (List<Client>) clientRepository.findAll();
     }
 
-    public Client getById(Integer id) {
-        Optional<Client> client = clientRepository.findById(id);
-        if (client.isPresent()) {
-            return client.get();
+    public Response addCategory(ClientDto clientDto) {
+
+              Client client = new Client(clientDto.getName(), clientDto.getPhoneNumber(), clientDto.isActive());
+              clientRepository.save(client);
+              return new Response("added client", true);
+    }
+
+    public Client getCategoryByID(Integer id){
+        return clientRepository.findById(id).orElse(new Client());
+    }
+
+    public Response updateCategory(Client client) {
+        Response response=new Response();
+        boolean hasName=false;
+        for ( Client client1:clientRepository.findAll()) {
+            if(client1.getName().trim().toLowerCase().equals(client.getName().
+                    trim().toLowerCase())&&!client1.getId().equals(client.getId())){
+                hasName=true;
+            }
         }
-        return new Client();
-    }
-
-    public Response add(ClientDto clientDto) {
-        Client client = new Client();
-        client.setName(clientDto.getName());
-        client.setPhoneNumber(clientDto.getPhoneNumber());
-        Client save = clientRepository.save(client);
-        return new Response("Success",true);
-    }
-
-    public Response del(Integer id) {
-return new Response();
+        if(!hasName) {
+            clientRepository.save(client);
+            response.setSuccess(true);
+            response.setMessage("Edite Client");
+            return response;
+        }
+        response.setMessage("This name already exist");
+        return response;
     }
 }

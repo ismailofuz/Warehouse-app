@@ -26,7 +26,7 @@ public class CategoryController {
       model.addAttribute("categoryDto",new CategoryDto());
       List<Category> categories=categoryService.getAllCategory();
         List<Category> collect = categories.stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).collect(Collectors.toList());
-      model.addAttribute("categories",collect);
+        model.addAttribute("categories",collect);
         List<Category> chooseList = categories.stream().filter(Category::isActive).collect(Collectors.toList());
         model.addAttribute("categoriesChoose",chooseList);
 
