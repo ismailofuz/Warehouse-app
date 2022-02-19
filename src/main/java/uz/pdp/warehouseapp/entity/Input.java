@@ -27,7 +27,4 @@ public class Input {
     @ManyToOne
     private Supplier supplier;
 
-    public void setFactureNumber(String factureNumber) {
-        this.factureNumber = this.warehouse+"_"+this.supplier+"_"+this.date;
-    }
 }
