@@ -9,7 +9,6 @@ import uz.pdp.warehouseapp.entity.Category;
 import uz.pdp.warehouseapp.service.CategoryService;
 
 import javax.persistence.criteria.CriteriaBuilder;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,8 +25,8 @@ public class CategoryController {
     public String showCategory(Model model){
       model.addAttribute("categoryDto",new CategoryDto());
       List<Category> categories=categoryService.getAllCategory();
-        List<Category> collect = categories.stream().sorted(Comparator.comparing(Category::getName)).collect(Collectors.toList());
-      model.addAttribute("categories",collect);
+        List<Category> collect = categories.stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).collect(Collectors.toList());
+        model.addAttribute("categories",collect);
         List<Category> chooseList = categories.stream().filter(Category::isActive).collect(Collectors.toList());
         model.addAttribute("categoriesChoose",chooseList);
 
@@ -43,7 +42,7 @@ public class CategoryController {
         Response response=categoryService.addCategory(categoryDto);
         model.addAttribute("categoryDto",new CategoryDto());
         List<Category> categories=categoryService.getAllCategory();
-        List<Category> collect = categories.stream().sorted(Comparator.comparing(Category::getName)).collect(Collectors.toList());
+        List<Category> collect = categories.stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).collect(Collectors.toList());
         model.addAttribute("categories",collect);
         List<Category> chooseList = categories.stream().filter(Category::isActive).collect(Collectors.toList());
         model.addAttribute("categoriesChoose",chooseList);
@@ -55,7 +54,7 @@ public class CategoryController {
 
         Category category=categoryService.getCategoryByID(id);
         List<Category> categories=categoryService.getAllCategory();
-        List<Category> collect = categories.stream().sorted(Comparator.comparing(Category::getName)).collect(Collectors.toList());
+        List<Category> collect = categories.stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).collect(Collectors.toList());
         model.addAttribute("categories",collect);
         List<Category> chooseList = categories.stream().filter(Category::isActive).collect(Collectors.toList());
         chooseList.remove(category);
@@ -75,7 +74,7 @@ public class CategoryController {
       if(response.isSuccess()){
           model.addAttribute("categoryDto",new CategoryDto());
           List<Category> categories=categoryService.getAllCategory();
-          List<Category> collect = categories.stream().sorted(Comparator.comparing(Category::getName)).collect(Collectors.toList());
+          List<Category> collect = categories.stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).collect(Collectors.toList());
           model.addAttribute("categories",collect);
           List<Category> chooseList = categories.stream().filter(Category::isActive).collect(Collectors.toList());
           chooseList.remove(category);
@@ -98,10 +97,5 @@ public class CategoryController {
             model.addAttribute("category",categoryReturn);
         }
         return "/category/editeCategory";
-    }
-    @GetMapping(path = "/delete/{id}")
-    public String deleteMeasurement(@PathVariable Integer id){
-        categoryService.deleteMeasurement(id);
-        return "redirect:/warehouse/category";
     }
 }

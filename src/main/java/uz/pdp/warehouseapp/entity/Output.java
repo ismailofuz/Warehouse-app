@@ -29,7 +29,4 @@ public class Output {
     @ManyToOne
     private Client client;
 
-    public void setFactureNumber(String factureNumber) {
-        this.factureNumber = this.warehouse+"_"+this.client+"_"+this.date;
-    }
 }
