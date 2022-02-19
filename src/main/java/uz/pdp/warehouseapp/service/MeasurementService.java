@@ -7,6 +7,7 @@ import uz.pdp.warehouseapp.entity.Measurement;
 import uz.pdp.warehouseapp.repository.MeasurementRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MeasurementService {
@@ -20,32 +21,22 @@ public class MeasurementService {
         return measurementRepository.findAll();
     }
 
-    public Response addMeasurement(MeasurementDto categoryDto) {
-
+    public Response addMeasurement(MeasurementDto measurementDto) {
       Response response=new Response();
-//        boolean categoryByName = MeasurementByName(categoryDto.getName());
-//        if(!categoryByName) {
-//            if (!categoryDto.getParentMeasurementId().equals(-1)) {
-//                if (categoryDto.getParentMeasurementId().equals(0)) {
-//                    Measurement category = new Measurement(categoryDto.getName(), categoryDto.isActive());
-//                    measurementRepository.save(category);
-//                }else {
-//                    Measurement category=new Measurement(categoryDto.getName(), measurementRepository.getById(categoryDto.getParentMeasurementId()),categoryDto.isActive());
-//                    measurementRepository.save(category);
-//                }
-//                response.setSuccess(true);
-//                response.setMessage("Add category");
-//                return response;
-//            }
-//            response.setMessage("Please choose parent category");
-//            return response;
-//        }
-//        response.setMessage("This name already exist");
+        boolean byName = measurementByName(measurementDto.getName());
+      if(byName){
+          response.setMessage("This "+measurementDto.getName()+" - measurement name already exist");
+          return response;
+      }
+        Measurement measurement=new Measurement(measurementDto.getName(),measurementDto.isActive());
+        measurementRepository.save(measurement);
+        response.setMessage("Add measurement");
+        response.setSuccess(true);
         return response;
     }
-    public boolean MeasurementByName(String name){
+    public boolean measurementByName(String name){
         for (Measurement category : measurementRepository.findAll()) {
-            if(category.getName().trim().toLowerCase().equals(name.trim().toLowerCase()))
+            if(category.getName().trim().equalsIgnoreCase(name.trim()))
                 return true;
         }
         return false;
@@ -54,21 +45,37 @@ public class MeasurementService {
     public Measurement getMeasurementByID(Integer id) {
         return measurementRepository.findById(id).orElse(new Measurement());
     }
-    public Response updateMeasurement(Measurement category) {
+    public Response updateMeasurement(Measurement measurement) {
         Response response=new Response();
         boolean hasName=false;
-        for (Measurement category1 : measurementRepository.findAll()) {
-            if(category1.getName().trim().toLowerCase().equals(category.getName().trim().toLowerCase())&&!category1.getId().equals(category.getId())){
-                hasName=true;
+        for (Measurement measurement1 : measurementRepository.findAll()) {
+            if (measurement1.getName().trim().equalsIgnoreCase(measurement.getName().trim()) && !measurement1.getId().equals(measurement.getId())) {
+                hasName = true;
+                break;
             }
         }
         if(!hasName) {
-            measurementRepository.save(category);
+            measurementRepository.save(measurement);
             response.setSuccess(true);
-            response.setMessage("Edite category");
+            response.setMessage("Edite measurement");
             return response;
         }
         response.setMessage("This name already exist");
+        return response;
+    }
+
+    public Response deleteMeasurement(Integer id) {
+        Response response=new Response();
+        Optional<Measurement> byId = measurementRepository.findById(id);
+        if (byId.isPresent()) {
+            Measurement measurement = byId.get();
+            measurement.setActive(false);
+            measurementRepository.save(measurement);
+            response.setSuccess(true);
+            response.setMessage("This measurement is no active");
+            return response;
+        }
+        response.setMessage("Not found measurement");
         return response;
     }
 }

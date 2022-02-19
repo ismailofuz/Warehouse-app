@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class ClientDto {
     private String name;
     private String phoneNumber;
+    private boolean isActive;
 }
