@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row mt-4">
+        <div style="max-width: 900px">
+            <div th:if="${message.isSuccess()!=true}" class="alert-success alert-danger h5 text-center" th:text="${message.getMessage()}" style="text-align: center"></div>
+            <div th:unless="${message.isSuccess()!=true}" class="alert-success h5 text-center" th:text="${message.getMessage()}"></div>
+        </div>
+        <form th:action="@{/warehouse/product/add}" method="post" enctype="multipart/form-data" >
+            <div class="col-md-5">
+                <div class="form-group row m-2">
+                    <div class="col-sm-3 text-center" >
+                        <h5 class="dropdown-item">Name:</h5>
+                    </div>
+                    <div class="col-sm-6">
+                        <input name="name" class="form-control"  type="text" placeholder="Product name" required minlength="3">
+                    </div>
+                </div>
+                <div class="form-group row m-2">
+                    <div class="col-sm-3 text-center">
+                        <h5 class="dropdown-item" >Category:</h5>
+                    </div>
+                    <div class="col-sm-6">
+                        <select class="form-select" name="category" >
+                            <option th:each="cat:${categories}" th:value="${cat.getId()}" th:text="${cat.getName()}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row m-2">
+                    <div class="col-sm-3 text-center">
+                        <h5 class="dropdown-item" >Measurement:</h5>
+                    </div>
+                    <div class="col-sm-6">
+                        <select class="form-select" name="measurement" >
+                            <option th:each="meas:${measurements}" th:value="${meas.getId()}" th:text="${meas.getName()}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row m-2">
+                    <div class="col-sm-3">
+                        <h5 class="dropdown-item" >Active</h5>
+                    </div>
+                    <div class="col-sm-5" style="border-color: #37d344">
+                        <input class="form-check-input m-2 h5" name="active" style="color: #37d344" type="checkbox"/>
+                    </div>
+
+                </div>
+
+                <div class="form-group row m-2">
+                    <div class="col-sm-3 text-center">
+                        <h5 class="dropdown-item" >Photos:</h5>
+                    </div>
+                    <div class="col-sm-6">
+                       <input name="attachment" type="file" multiple="multiple" required minlength="1">
+                    </div>
+                </div>
+
+                <div class="form-group row m-2">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-8">
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <button class="btn btn-secondary ms-2" type="reset">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
