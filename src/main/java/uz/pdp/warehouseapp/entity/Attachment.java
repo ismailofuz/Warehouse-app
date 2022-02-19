@@ -18,4 +18,10 @@ public class Attachment {
     private String name;
     private long size;
     private String contentType;
+
+    public Attachment(String name, long size, String contentType) {
+        this.name = name;
+        this.size = size;
+        this.contentType = contentType;
+    }
 }
