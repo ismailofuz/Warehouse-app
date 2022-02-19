@@ -40,8 +40,8 @@ public class ClientController {
         return "/client/clientOperation";
     }
     @PostMapping(path = "/add")
-    public String addCategory(ClientDto clientDto,Model model){
-        Response response=clientService.addCategory(clientDto);
+    public String addClient(ClientDto clientDto,Model model){
+        Response response=clientService.addClient(clientDto);
         model.addAttribute("clientDto",new ClientDto());
         List<Client> clients=clientService.getAll();
         List<Client> collect = clients.stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).collect(Collectors.toList());
@@ -50,11 +50,13 @@ public class ClientController {
         model.addAttribute("clientChoose",chooseList);
         model.addAttribute("message",response);
         return "/client/clientOperation";
-    }
+        }
+
+
     @GetMapping(path = "/edite/{id}")
     public String editeCategory(@PathVariable Integer id, Model model){
 
-        Client client= clientService.getCategoryByID(id);
+        Client client= clientService.getClientByID(id);
         List<Client> clients=clientService.getAll();
         List<Client> collect = clients.stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).collect(Collectors.toList());
         model.addAttribute("clients",collect);
@@ -72,9 +74,9 @@ public class ClientController {
     }
     @PostMapping(path = "/edite/{id}")
     public String updateCategory(Client client,Model model){
-        Response response=clientService.updateCategory(client);
+        Response response=clientService.updateClient(client);
         if(response.isSuccess()){
-            model.addAttribute("categoryDto",new CategoryDto());
+            model.addAttribute("clientDto",new ClientDto());
             List<Client> clients=clientService.getAll();
             List<Client> collect = clients.stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).collect(Collectors.toList());
             model.addAttribute("clients ",collect);
@@ -85,7 +87,7 @@ public class ClientController {
 
             return "redirect:/warehouse/client";
         }
-        Client clientReturn= clientService.getCategoryByID(client.getId());
+        Client clientReturn= clientService.getClientByID(client.getId());
         List<Client> clients=clientService.getAll();
         List<Client> collect = clients.stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).collect(Collectors.toList());
         model.addAttribute("clients",collect);

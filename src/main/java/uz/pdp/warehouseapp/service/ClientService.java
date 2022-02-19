@@ -21,18 +21,17 @@ public class ClientService {
        return (List<Client>) clientRepository.findAll();
     }
 
-    public Response addCategory(ClientDto clientDto) {
-
+    public Response addClient(ClientDto clientDto) {
               Client client = new Client(clientDto.getName(), clientDto.getPhoneNumber(), clientDto.isActive());
               clientRepository.save(client);
               return new Response("added client", true);
     }
 
-    public Client getCategoryByID(Integer id){
+    public Client getClientByID(Integer id){
         return clientRepository.findById(id).orElse(new Client());
     }
 
-    public Response updateCategory(Client client) {
+    public Response updateClient(Client client) {
         Response response=new Response();
         boolean hasName=false;
         for ( Client client1:clientRepository.findAll()) {
