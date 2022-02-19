@@ -18,5 +18,12 @@ public class Client {
     private String name;
     @Column(nullable = false,unique = true)
     private String phoneNumber;
+    @Column(nullable = false)
+    private boolean isActive;
 
+    public Client(String name, String phoneNumber, boolean isActive) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.isActive = isActive;
+    }
 }
