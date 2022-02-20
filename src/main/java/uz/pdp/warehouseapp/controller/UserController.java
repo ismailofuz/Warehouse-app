@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uz.pdp.warehouseapp.entity.User;
 import uz.pdp.warehouseapp.service.UserService;
 
@@ -16,7 +17,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
+    @GetMapping("/users")
     public String showUserList(Model model) {
         List<User> userList = userService.listAll();
         model.addAttribute("userList", userList);
@@ -28,8 +29,10 @@ public class UserController {
         return "user_form";
     }
     @GetMapping("users/save")
-    public String saveUser(User user){
+    public String saveUser(User user, RedirectAttributes redirectAttributes){
         userService.save(user);
+        redirectAttributes.addFlashAttribute("message","The user has been add successfully");
+
         return "redirect:/users";
     }
 

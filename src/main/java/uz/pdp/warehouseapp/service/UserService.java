@@ -12,6 +12,13 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    public User login(String gmail, String password){
+        User user = userRepository.findByEmailAndPhoneNumber(gmail, password);
+        return user;
+
+    }
+
     public List<User> listAll() {
         return userRepository.findAll();
     }

@@ -4,12 +4,23 @@
     <meta charset="UTF-8">
     <title>Manage Users</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous" />
 </head>
 <body>
 <div class="container-fluid text-center">
-    <div><h2>Manage users</h2></div>
+
+    <a class="h2" th:href="@{users}">Manage Users</a>
+</div>
+<div class="container-fluid text-center">
+<!--    <div><h2>Manage users</h2></div>-->
     <div class="m-2">
         <a class="h3 " th:href="@{/users/new}">Add New User</a>
+    </div>
+    <div th:if="${message}" class="alert alert-success text-center">
+        [[${message}]]
+
     </div>
     <div>
         <table class="table table-bordered">
