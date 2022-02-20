@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Suppliers</title>
+</head>
+<body>
+
+<h1 style="color: #006fff" , align="center"> Welcome to suppliers page</h1>
+
+<table class="table table-bordered" style="max-width: 900px">
+    <div style="max-width: 900px">
+        <div th:if="${message.isSuccess()!=true}" class="alert-success alert-danger h5 text-center" th:text="${message.getMessage()}" style="text-align: center"></div>
+        <div th:unless="${message.isSuccess()!=true}" class="alert-success h5 text-center" th:text="${message.getMessage()}"></div>
+    </div>
+    <thead class="table-dark">
+    <tr class="text-center">
+        <th >Name</th>
+        <th >Parent Category</th>
+        <th>Active</th>
+        <th>Operation</th>
+    </tr>
+    </thead>
+    <tr th:each="catg:${categories}">
+        <td class="h6" style="color: darkblue" th:text="${catg.getName()}"></td>
+        <td>
+            <span  class="h6" style="color: darkblue" th:if="${catg.getParentCategoryId()!=null}" th:text="${catg.getParentCategoryId().getName()}"></span>
+            <span  class="h6" style="color: darkblue" th:if="${catg.getParentCategoryId()==null}" >No parent category</span>
+        </td>
+        <td class="text-center">
+            <span class=" btn card-title" style="background: #37d344" th:if="${catg.isActive()==true}">Active</span>
+            <span class="btn card-title" style="background: rgba(238,152,152,0.99)" th:unless="${catg.isActive()==true}">No_Active</span>
+        </td>
+        <td class="text-center">
+            <a class="btn btn-secondary" th:href="@{'/warehouse/category/delete/'+${catg.getId()}}" style="background: #e05858">No_Active</a>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
