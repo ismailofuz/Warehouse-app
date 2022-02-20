@@ -41,7 +41,7 @@
 ////        Response response=outPutService.addOutPut(outputDto);
 ////        model.addAttribute("clientDto",new ClientDto());
 ////        List<Client> clients=clientService.getAll();
-////        List<Client> collect = clients.stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).collect(Collectors.toList());
+////        List<Cl                                                                                                                                                                                                                                                     ient> collect = clients.stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).collect(Collectors.toList());
 ////        model.addAttribute("clients",collect);
 ////        List<Client> chooseList = clients.stream().filter(Client::isActive).collect(Collectors.toList());
 ////        model.addAttribute("clientChoose",chooseList);
