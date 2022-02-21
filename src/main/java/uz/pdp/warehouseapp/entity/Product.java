@@ -19,7 +19,7 @@ public class Product {
     @Column(nullable = false,unique = true)
     private String name;
     @Column(unique = true)
-    private String code = String.valueOf(UUID.randomUUID());
+    private String code ="#000";
     private boolean active=true;
     @ManyToOne
     private Category category;
@@ -28,4 +28,12 @@ public class Product {
     @OneToMany
     @ToString.Exclude
     private List<Attachment>attachments;
+
+    public Product(String name, boolean active, Category category, Measurement measurement, List<Attachment> attachments) {
+        this.name = name;
+        this.active = active;
+        this.category = category;
+        this.measurement = measurement;
+        this.attachments = attachments;
+    }
 }
