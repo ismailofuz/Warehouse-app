@@ -33,6 +33,13 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    private boolean active=true;
+    private boolean active;
 
+    public User(String firstName, String lastName, String phoneNumber, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.password = password;
+    }
 }
