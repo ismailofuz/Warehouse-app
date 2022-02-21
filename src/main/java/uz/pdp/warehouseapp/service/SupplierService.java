@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import uz.pdp.warehouseapp.dto.Response;
 import uz.pdp.warehouseapp.dto.SupplierDTO;
+import uz.pdp.warehouseapp.entity.Client;
 import uz.pdp.warehouseapp.entity.Supplier;
 import uz.pdp.warehouseapp.repository.SupplierRepository;
 
@@ -24,25 +25,44 @@ public class SupplierService {
     public Supplier getOne(Integer id) {
 
         Optional<Supplier> byId = supplierRepository.findById(id);
-        if (!byId.isPresent()){
+        if (!byId.isPresent()) {
             return new Supplier();
         }
         return byId.get();
     }
 
-    public Response edit(Integer id, Supplier supplier) {
+//    public Response edit(Integer id, Supplier supplier) {
+//
+//        Optional<Supplier> byId = supplierRepository.findById(id);
+//
+//        Supplier editSupplier = byId.get();
+//
+//        if (!byId.isPresent()) {
+//            return new Response("This supplier not found(id)", false);
+//        }
+//        editSupplier.setName(supplier.getName());
+//        editSupplier.setPhoneNumber(supplier.getPhoneNumber());
+//        supplierRepository.save(editSupplier);
+//        return new Response("Successfully edited", true);
+//    }
 
-        Optional<Supplier> byId = supplierRepository.findById(id);
-
-        Supplier editSupplier = byId.get();
-
-        if (!byId.isPresent()) {
-            return new Response("This supplier not found(id)", false);
+    public Response edit(Supplier supplier) {
+        Response response = new Response();
+        boolean hasNumber = false;
+        for (Supplier supplier1 : supplierRepository.findAll()) {
+            if (supplier1.getPhoneNumber().equals(supplier.getPhoneNumber()) &&
+                    !supplier1.getId().equals(supplier.getId())) {
+                hasNumber = true;
+            }
         }
-        editSupplier.setName(supplier.getName());
-        editSupplier.setPhoneNumber(supplier.getPhoneNumber());
-        supplierRepository.save(editSupplier);
-        return new Response("Successfully edited", true);
+        if (!hasNumber) {
+            supplierRepository.save(supplier);
+            response.setSuccess(true);
+            response.setMessage("Edite supplier");
+            return response;
+        }
+        response.setMessage("This supplier number already exist");
+        return response;
     }
 
 
