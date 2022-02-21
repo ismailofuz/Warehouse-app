@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import uz.pdp.warehouseapp.dto.Response;
+import uz.pdp.warehouseapp.dto.SupplierDTO;
 import uz.pdp.warehouseapp.entity.Supplier;
 import uz.pdp.warehouseapp.repository.SupplierRepository;
 
@@ -45,12 +46,12 @@ public class SupplierService {
     }
 
 
-    public Response add(Supplier supplier) {
+    public Response add(SupplierDTO supplierDTO) {
 
         Supplier supplier1 = new Supplier();
 
-        supplier1.setName(supplier.getName());
-        supplier1.setPhoneNumber(supplier.getPhoneNumber());
+        supplier1.setName(supplierDTO.getName());
+        supplier1.setPhoneNumber(supplierDTO.getPhoneNumber());
         supplierRepository.save(supplier1);
         return new Response("New supplier added", true);
     }
