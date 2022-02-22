@@ -12,6 +12,12 @@
 
     <form th:action="@{/warehouse/user/register}" method="post" th:object="${userDto}"
           style="max-width: 500px; margin: 0 auto;">
+         <div  style="max-width: 500px">
+                <div th:if="${message.isSuccess()!=true}" class="alert-success alert-danger h5 text-center"
+                     th:text="${message.getMessage()}" style="text-align: center"></div>
+                <div th:unless="${message.isSuccess()!=true}" class="alert-success h5 text-center"
+                     th:text="${message.getMessage()}"></div>
+            </div>
         <div class="border border-secondary rounded p-3">
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">First Name </label>
@@ -48,7 +54,7 @@
                 </div>
                 <div class="col-sm-6">
 
-                    <input type="text" th:field="*{phoneNumber}" class="form-control"required minlength="7" maxlength="7"/>
+                    <input type="number" th:field="*{phoneNumber}" class="form-control"required minlength="7" maxlength="7"/>
                 </div>
             </div>
             <br>

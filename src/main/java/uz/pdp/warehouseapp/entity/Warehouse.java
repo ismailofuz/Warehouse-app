@@ -18,8 +18,9 @@ public class Warehouse {
     @Column(nullable = false,unique = true)
     private String name;
     private boolean active=true;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<User>users;
+
 
 }
