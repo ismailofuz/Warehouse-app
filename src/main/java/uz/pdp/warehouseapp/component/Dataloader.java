@@ -2,9 +2,14 @@ package uz.pdp.warehouseapp.component;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Component;
 import uz.pdp.warehouseapp.entity.User;
 import uz.pdp.warehouseapp.repository.UserRepository;
+
+import java.util.Properties;
 
 @Component
 public class Dataloader implements CommandLineRunner {
@@ -18,12 +23,29 @@ final UserRepository userRepository;
 
     @Override
     public void run(String... args) throws Exception {
-       if("create-drop".contains(ddl)){
+       if("create".contains(ddl)||"create-drop".contains(ddl)){
            User user=new User("Javokhirbek","Rakhimov","+998997834961",
                    "javohirbekrakhimov@gmail.com","997834961");
            user.setCode("WZ:0001");
-           user.setActive(true);
            userRepository.save(user);
        }
+    }
+
+    @Bean
+    public JavaMailSender getJavaMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+
+        mailSender.setUsername("javohirbekrakhimov@gmail.com");
+        mailSender.setPassword("fgdutjaiuxspzerv");
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.debug", "true");
+
+        return mailSender;
     }
 }
