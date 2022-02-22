@@ -40,7 +40,7 @@ public class UserService {
         Optional<User> byEmail = userRepository.findByEmail(email);
         if (byEmail.isPresent()) {
             User user = byEmail.get();
-            //emailSenderService.setMailSender(user.getEmail(),"Get password login foe Warehouse","password:"+user.getPassword());
+         emailSenderService.setMailSender(user.getEmail(),"Get password login foe Warehouse","password:"+user.getPassword());
             response.setMessage("Check your email");
             response.setSuccess(true);
             return response;
