@@ -77,7 +77,7 @@ public class SupplierController {
             chooseList.remove(supplier);
             model.addAttribute("supplierChoose", chooseList);
             model.addAttribute("message", response);
-            return "redirect:/warehouse/supplier";
+            return "redirect:/warehouse/supplier/get";
         }
         Supplier supplierReturn = supplierService.getOne(supplier.getId());
         List<Supplier> suppliers = supplierService.getAll();
