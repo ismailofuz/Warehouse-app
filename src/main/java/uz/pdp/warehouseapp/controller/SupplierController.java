@@ -3,10 +3,8 @@ package uz.pdp.warehouseapp.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import uz.pdp.warehouseapp.dto.ClientDto;
 import uz.pdp.warehouseapp.dto.Response;
 import uz.pdp.warehouseapp.dto.SupplierDTO;
-import uz.pdp.warehouseapp.entity.Client;
 import uz.pdp.warehouseapp.entity.Supplier;
 import uz.pdp.warehouseapp.service.SupplierService;
 
