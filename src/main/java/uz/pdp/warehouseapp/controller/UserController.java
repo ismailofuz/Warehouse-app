@@ -63,7 +63,7 @@ public class UserController {
         Response response=userService.saveUSer(userDTO);
         if(response.isSuccess()){
             String code=String.valueOf(Math.random()*89999+10000);
-            EmailCode.emailCode.put(userDTO.getEmail(),code );
+            EmailCode.emailCode.put(userDTO.getEmail(),code);
             emailSenderService.setMailSender(userDTO.getEmail(),"Verification code",
                     "Code: "+code);
             model.addAttribute("userDto",userDTO);
