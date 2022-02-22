@@ -46,7 +46,7 @@ public class SupplierController {
 //    }
 
     @GetMapping(path = "/edit/{id}")
-    public String editeCategory(@PathVariable Integer id, Model model) {
+    public String editeSupplier(@PathVariable Integer id, Model model) {
 
         Supplier supplier = supplierService.getOne(id);
         List<Supplier> suppliers = supplierService.getAll();
@@ -107,9 +107,19 @@ public class SupplierController {
         List<Supplier> chooseList = suppliers.stream().filter(Supplier::isActive).collect(Collectors.toList());
         model.addAttribute("supplierChoose", chooseList);
         model.addAttribute("message", response);
-        return "/supplier/Supplier";
+        return "/templates/supplier/sup.html";
     }
-
+    @GetMapping(path = "/add/1")
+    public String add( Model model) {
+        model.addAttribute("supplierDTO", new SupplierDTO());
+//        List<Supplier> suppliers = supplierService.getAll();
+//        List<Supplier> collect = suppliers.stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).collect(Collectors.toList());
+//        model.addAttribute("suppliers", collect);
+//        List<Supplier> chooseList = suppliers.stream().filter(Supplier::isActive).collect(Collectors.toList());
+//        model.addAttribute("supplierChoose", chooseList);
+        model.addAttribute("message", new Response());
+        return "/templates/supplier/sup.html";
+    }
     @DeleteMapping("/delete/{id}")
     public Response delete(@PathVariable Integer id) {
         return supplierService.delete(id);
