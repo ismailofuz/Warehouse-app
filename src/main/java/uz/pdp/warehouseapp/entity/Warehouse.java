@@ -14,10 +14,15 @@ import java.util.List;
 public class Warehouse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer id;
+
     @Column(nullable = false,unique = true)
+
     private String name;
+
     private boolean active=true;
+
     @ManyToMany
     @ToString.Exclude
     private List<User>users;

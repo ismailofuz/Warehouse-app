@@ -6,6 +6,7 @@ import uz.pdp.warehouseapp.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
+    Long countById(Integer id);
     User findByEmailAndPhoneNumber(String email,String password);
 }
 

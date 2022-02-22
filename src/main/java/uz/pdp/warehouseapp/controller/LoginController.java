@@ -19,24 +19,24 @@ import java.util.Objects;
 @RequestMapping
 public class LoginController {
 
-    @Autowired
-    private UserService userService;
-
-    @GetMapping("/login")
-    public ModelAndView login() {
-        ModelAndView modelAndView = new ModelAndView("login");
-        modelAndView.addObject("user", new User());
-        return modelAndView;
-    }
-
-    //Check for Credentials
-    @PostMapping("/login")
-    public String login(@ModelAttribute(name = "user") User user) {
-        User login = userService.login(user.getEmail(), user.getPassword());
-        System.out.printf("login");
-        if (Objects.nonNull(login)) {
-            return "redirect:/";
-        }
-        return "users";
-    }
+//    @Autowired
+//    private UserService userService;
+//
+//    @GetMapping("/login")
+//    public ModelAndView login() {
+//        ModelAndView modelAndView = new ModelAndView("login");
+//        modelAndView.addObject("user", new User());
+//        return modelAndView;
+//    }
+//
+//    //Check for Credentials
+//    @PostMapping("/login")
+//    public String login(@ModelAttribute(name = "user") User user) {
+//        User login = userService.login(user.getEmail(), user.getPassword());
+//        System.out.printf("login");
+//        if (Objects.nonNull(login)) {
+//            return "redirect:/";
+//        }
+//        return "users";
+//    }
 }
