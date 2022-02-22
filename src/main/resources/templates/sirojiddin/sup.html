@@ -64,7 +64,7 @@
                     <th>Active</th>
                 </tr>
                 </thead>
-                <tr th:each="sup:${clients}">
+                <tr th:each="sup:${suppliers}">
                     <td class="h6" style="color: darkblue" th:text="${sup.getName()}"></td>
                     <td>
                         <span  class="h6" style="color: darkblue" th:if="${sup.getPhoneNumber()!=null}" th:text="${sup.getPhoneNumber()}"></span>

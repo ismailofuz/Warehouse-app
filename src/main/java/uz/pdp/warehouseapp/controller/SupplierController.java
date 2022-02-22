@@ -1,6 +1,7 @@
 package uz.pdp.warehouseapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.warehouseapp.dto.Response;
@@ -11,7 +12,7 @@ import uz.pdp.warehouseapp.service.SupplierService;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RestController()
+@Controller
 @RequestMapping(path = "/warehouse/supplier")
 public class SupplierController {
     @Autowired
@@ -29,10 +30,10 @@ public class SupplierController {
 
 
         if (suppliers.isEmpty()) {
-            model.addAttribute("message", new Response("Not found any client", false));
+            model.addAttribute("message", new Response("Not found any supplier", false));
         } else
-            model.addAttribute("message", new Response("Total client amount: " + suppliers.size(), true));
-        return "/supplier/Supplier";
+            model.addAttribute("message", new Response("Total supplier amount: " + suppliers.size(), true));
+        return "/sirojiddin/sup";
     }
 
     @GetMapping("/{id}")
@@ -56,13 +57,12 @@ public class SupplierController {
         chooseList.remove(supplier);
         model.addAttribute("supplierChoose", chooseList);
         if (suppliers.isEmpty()) {
-
             model.addAttribute("message", new Response("Not found this supplier", false));
         } else {
             model.addAttribute("supplier", supplier);
         }
         model.addAttribute("message", new Response());
-        return "/supplier/supplierEdit";
+        return "/sirojiddin/supplierEdit";
     }
 
     @PostMapping(path = "/edit/{id}")
@@ -72,12 +72,11 @@ public class SupplierController {
             model.addAttribute("supplierDTO", new SupplierDTO());
             List<Supplier> suppliers = supplierService.getAll();
             List<Supplier> collect = suppliers.stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).collect(Collectors.toList());
-            model.addAttribute("suppliers ", collect);
+            model.addAttribute("suppliers", collect);
             List<Supplier> chooseList = suppliers.stream().filter(Supplier::isActive).collect(Collectors.toList());
             chooseList.remove(supplier);
             model.addAttribute("supplierChoose", chooseList);
             model.addAttribute("message", response);
-
             return "redirect:/warehouse/supplier";
         }
         Supplier supplierReturn = supplierService.getOne(supplier.getId());
@@ -88,13 +87,12 @@ public class SupplierController {
         chooseList.remove(supplier);
         model.addAttribute("suppliersChoose", chooseList);
         if (suppliers.isEmpty()) {
-
             model.addAttribute("message", new Response("Not found this supplier", false));
         } else {
             model.addAttribute("client", supplierReturn);
         }
         model.addAttribute("message", new Response());
-        return "/supplier/supplierEdit";
+        return "/sirojiddin/supplierEdit";
     }
 
     @PostMapping(path = "/add")
@@ -107,19 +105,19 @@ public class SupplierController {
         List<Supplier> chooseList = suppliers.stream().filter(Supplier::isActive).collect(Collectors.toList());
         model.addAttribute("supplierChoose", chooseList);
         model.addAttribute("message", response);
-        return "/templates/supplier/sup.html";
+        return "/sirojiddin/sup";
     }
-    @GetMapping(path = "/add/1")
-    public String add( Model model) {
-        model.addAttribute("supplierDTO", new SupplierDTO());
-//        List<Supplier> suppliers = supplierService.getAll();
-//        List<Supplier> collect = suppliers.stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).collect(Collectors.toList());
-//        model.addAttribute("suppliers", collect);
-//        List<Supplier> chooseList = suppliers.stream().filter(Supplier::isActive).collect(Collectors.toList());
-//        model.addAttribute("supplierChoose", chooseList);
-        model.addAttribute("message", new Response());
-        return "/templates/supplier/sup.html";
-    }
+//    @GetMapping(path = "/add/1")
+//    public String add( Model model) {
+//        model.addAttribute("supplierDTO", new SupplierDTO());
+////        List<Supplier> suppliers = supplierService.getAll();
+////        List<Supplier> collect = suppliers.stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).collect(Collectors.toList());
+////        model.addAttribute("suppliers", collect);
+////        List<Supplier> chooseList = suppliers.stream().filter(Supplier::isActive).collect(Collectors.toList());
+////        model.addAttribute("supplierChoose", chooseList);
+//        model.addAttribute("message", new Response());
+//        return "/sirojiddin/sup";
+//    }
     @DeleteMapping("/delete/{id}")
     public Response delete(@PathVariable Integer id) {
         return supplierService.delete(id);
