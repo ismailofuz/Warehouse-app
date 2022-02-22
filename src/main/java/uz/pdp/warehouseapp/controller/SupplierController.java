@@ -1,6 +1,7 @@
 package uz.pdp.warehouseapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.warehouseapp.dto.Response;
@@ -11,7 +12,7 @@ import uz.pdp.warehouseapp.service.SupplierService;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RestController()
+@Controller()
 @RequestMapping(path = "/warehouse/supplier")
 public class SupplierController {
     @Autowired
@@ -97,17 +98,17 @@ public class SupplierController {
         return "/supplier/supplierEdit";
     }
 
-    @PostMapping(path = "/add")
+    @GetMapping(path = "/add")
     public String add(SupplierDTO supplierDTO, Model model) {
-        Response response = supplierService.add(supplierDTO);
+       // Response response = supplierService.add(supplierDTO);
         model.addAttribute("supplierDTO", new SupplierDTO());
         List<Supplier> suppliers = supplierService.getAll();
         List<Supplier> collect = suppliers.stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).collect(Collectors.toList());
         model.addAttribute("suppliers", collect);
         List<Supplier> chooseList = suppliers.stream().filter(Supplier::isActive).collect(Collectors.toList());
         model.addAttribute("supplierChoose", chooseList);
-        model.addAttribute("message", response);
-        return "/supplier/Supplier";
+        model.addAttribute("message", new Response());
+        return "/sirojiddin/supp";
     }
 
     @DeleteMapping("/delete/{id}")
