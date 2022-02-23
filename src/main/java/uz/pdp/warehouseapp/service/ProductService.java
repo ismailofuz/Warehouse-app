@@ -1,5 +1,10 @@
 package uz.pdp.warehouseapp.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -7,17 +12,12 @@ import uz.pdp.warehouseapp.dto.ProductDto;
 import uz.pdp.warehouseapp.dto.Response;
 import uz.pdp.warehouseapp.entity.*;
 import uz.pdp.warehouseapp.repository.*;
-import uz.pdp.warehouseapp.util.Constants;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -91,5 +91,26 @@ public class ProductService {
                 return true;
         }
         return false;
+    }
+
+    public Page<Product> getAll(PageRequest pageRequest) {
+        return productRepository.findAll(pageRequest);
+    }
+    public List<Product>getAllProduct(){
+        return productRepository.findAll();
+    }
+
+    public List<ResponseEntity<?>> getPhotos(Integer id) {
+   List<ResponseEntity<?>>photos=new ArrayList<>();
+        Optional<Product> byId = productRepository.findById(id);
+        if (byId.isPresent()) {
+            Product product = byId.get();
+            List<Attachment> attachments = product.getAttachments();
+            for (Attachment attachment : attachments) {
+                AttachmentContent byAttachment = attachmentContentRepository.findByAttachment(attachment);
+                photos.add(ResponseEntity.ok().contentType(MediaType.valueOf(attachment.getContentType())).header(HttpHeaders.CONTENT_DISPOSITION,attachment.getName()).body(byAttachment.getBytes()));
+            }
+        }
+        return photos;
     }
 }

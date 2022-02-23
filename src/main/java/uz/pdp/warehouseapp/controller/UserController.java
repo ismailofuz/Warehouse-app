@@ -1,70 +1,92 @@
 package uz.pdp.warehouseapp.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import uz.pdp.warehouseapp.entity.User;
-import uz.pdp.warehouseapp.service.UserNotFoundExaption;
+import org.springframework.web.bind.annotation.*;
+import uz.pdp.warehouseapp.dto.Response;
+import uz.pdp.warehouseapp.dto.UserDTO;
 import uz.pdp.warehouseapp.service.UserService;
 
-import java.util.List;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping(path = "/warehouse/user")
 public class UserController {
-    @Autowired
-    private UserService userService;
+    final UserService userService;
 
-    @GetMapping
-    public String showUserList(Model model) {
-        List<User> listUsers = userService.listAll();
-        model.addAttribute("listUsers", listUsers);
-        return "users";
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
-    @GetMapping("/new")
-    public String showNewForm(Model model) {
-        model.addAttribute("user", new User());
-        model.addAttribute("pageTitle", "Add New User");
-        return "user_form";
+    @PostMapping("/login")
+    public String login(UserDTO userDTO, Model model) {
+        Response response = userService.checkUser(userDTO);
+        model.addAttribute("message", response);
+        if (response.isSuccess())
+            return "dashboard";
+        else
+            model.addAttribute("userDto", new UserDTO());
+        return "login";
     }
 
-    @PostMapping("/save")
-    public String saveUser(User user, RedirectAttributes redirectAttributes) {
-        userService.save(user);
-        redirectAttributes.addFlashAttribute("message", "The User has been saved successfully");
-        return "redirect:/users";
+    @GetMapping(path = "/code")
+    public String emailInput(Model model) {
+        model.addAttribute("message", new Response("Enter your email", true));
+        return "/user/emailInput";
     }
 
-    @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
-        try {
-            User user = userService.get(id);
-            model.addAttribute("user", user);
-            model.addAttribute("pageTitle", "Edit User (ID: " + id + ")");
-            return "user_form";
-        } catch (UserNotFoundExaption e) {
-            redirectAttributes.addFlashAttribute("message", "The User has been saved successfully");
-            return "redirect:/users";
+    @PostMapping(path = "/code")
+    public String sendCode(Model model, @ModelAttribute("email") String email) {
+        Response response = userService.setdCodeForRemember(email);
+        model.addAttribute("userDto", new UserDTO());
+        model.addAttribute("message", response);
+        return "login";
+
+    }
+
+    @GetMapping(path = "/register")
+    public String register(Model model) {
+        model.addAttribute("userDto", new UserDTO());
+        model.addAttribute("message", new Response());
+        return "/user/register";
+    }
+
+    @PostMapping(path = "/register")
+    public String saveNewUser(UserDTO userDTO, Model model) {
+        Response response = userService.saveUSer(userDTO);
+        if (response.isSuccess()) {
+            model.addAttribute("userDto", userDTO);
+            model.addAttribute("message", response);
+            return "/user/verficationCode";
         }
+        model.addAttribute("userDto", new UserDTO());
+        model.addAttribute("message", response);
+        return "/user/register";
     }
-    @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
-        try {
-            userService.delete(id);
-            redirectAttributes.addFlashAttribute("message","The user ID " + id + " has been deleted.");
 
-        } catch (UserNotFoundExaption e) {
-            redirectAttributes.addFlashAttribute("message",e.getMessage());
+    @PostMapping(path = "/verification/{email}")
+    public String register(@PathVariable String email, Model model,
+                           @ModelAttribute("code") String code) {
+        Response response = userService.checkVerificationCode(email, code);
+        if (response.isSuccess()) {
+            model.addAttribute("message", response);
+            return "dashboard";
         }
-            return "redirect:/users";
+        model.addAttribute("userDto", userService.getByEmail(email));
+        model.addAttribute("message", response);
+        if (response.getMessage().equals("Sorry your account deleted")) {
+            model.addAttribute("userDto", new UserDTO());
+            model.addAttribute("message", response);
+            return "/user/register";
+        }
+
+        return "/user/verficationCode";
     }
 
-
-
+    @GetMapping(path = "/verification/resent/{email}")
+    public String resentVerificationCode(@PathVariable String email, Model model) {
+        Response response = userService.resentVerificationCode(email);
+        model.addAttribute("message", response);
+        model.addAttribute("userDto", userService.getByEmail(email));
+        return "/user/verficationCode";
+    }
 }

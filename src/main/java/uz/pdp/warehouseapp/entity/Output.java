@@ -1,11 +1,13 @@
 package uz.pdp.warehouseapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -28,5 +30,7 @@ public class Output {
     private Currency currency;
     @ManyToOne
     private Client client;
+    @OneToMany
+    private List <OutputProduct> outputProduct ;
 
 }

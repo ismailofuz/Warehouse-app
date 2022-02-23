@@ -24,5 +24,4 @@ public class InputProduct {
     private Input input;
     @ManyToOne
     private Product product;
-
 }
