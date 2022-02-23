@@ -96,6 +96,9 @@ public class ProductService {
     public Page<Product> getAll(PageRequest pageRequest) {
         return productRepository.findAll(pageRequest);
     }
+    public List<Product>getAllProduct(){
+        return productRepository.findAll();
+    }
 
     public List<ResponseEntity<?>> getPhotos(Integer id) {
    List<ResponseEntity<?>>photos=new ArrayList<>();
