@@ -24,9 +24,9 @@ final UserRepository userRepository;
     @Override
     public void run(String... args) throws Exception {
        if("create".contains(ddl)||"create-drop".contains(ddl)){
-           User user=new User("Javokhirbek","Rakhimov","+998997834961",
-                   "javohirbekrakhimov@gmail.com","997834961");
-           user.setCode("WZ:0001");
+           User user=new User("Sirojiddin","Ismoilov","+998930540905",
+                   "sirojiddin.ismoilov7181@gmail.com","12345678");
+           user.setCode("WZ:0002");
            userRepository.save(user);
        }
     }
