@@ -46,14 +46,12 @@
                 </div>
                 <div class="form-group row m-2">
                     <div class="col-sm-3 text-center">
-                        <h5 class="alert alert-primary" role="alert">OutPutProduct:</h5>
+                        <a class="alert alert-primary"  th:href="@{/warehouse/opp/add} ">Out Put Product</a>
                     </div>
                     <div class="col-sm-6">
-                        <input multiple="multiple" name="" type="text" class="form-control" placeholder="OutPut Product">
+                        <input multiple="multiple" name="" type="text" class="form-control" placeholder="OutPut Product Name">
                     </div>
                 </div>
-
-
                 <div class="form-group row m-2">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-8">
@@ -127,6 +125,7 @@
         <div class="col-sm-3"></div>
         <div class="col-sm-8">
             <a class="btn btn-primary m-2 btn btn-secondary ms-2" th:href="@{'/warehouse/output/addOPP'}">Save</a>
+            <a class="h2 btn btn-primary" style="background: white;color: black" th:href="@{/warehouse/output} ">End</a>
             <button class="btn btn-secondary ms-2" type="reset">Reset</button>
         </div>
     </div>

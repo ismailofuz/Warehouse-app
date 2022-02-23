@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,6 +32,6 @@ public class Output {
     @ManyToOne
     private Client client;
     @OneToMany
-    private List <OutputProduct> outputProduct ;
+    private List <OutputProduct> outputProduct=new ArrayList<>() ;
 
 }

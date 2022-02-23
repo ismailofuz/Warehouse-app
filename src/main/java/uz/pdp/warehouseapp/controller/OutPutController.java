@@ -9,7 +9,6 @@ import uz.pdp.warehouseapp.dto.OutputProductDto;
 import uz.pdp.warehouseapp.dto.Response;
 import uz.pdp.warehouseapp.entity.*;
 import uz.pdp.warehouseapp.repository.OutPutRepository;
-import uz.pdp.warehouseapp.repository.ProductRepository;
 import uz.pdp.warehouseapp.service.ClientService;
 import uz.pdp.warehouseapp.service.OutPutService;
 import uz.pdp.warehouseapp.service.ProductService;
@@ -32,7 +31,7 @@ public class OutPutController {
 
     @GetMapping()
     public String showOutPut(Model model) {
-        model.addAttribute("outPutProductDto",new OutputProductDto());
+        model.addAttribute("outPutProductDto", new OutputProductDto());
 
         model.addAttribute("outPutDto", new OutputDto());
         List<Client> clients = clientService.getAll();
@@ -55,16 +54,17 @@ public class OutPutController {
             model.addAttribute("message", new Response("Total client amount: " + outputs.size(), true));
         return "/output/outputOperation";
     }
-      @GetMapping("/addOPP")
-      public String addOutPutPro(Model model ,OutputProductDto outputProductDto){
+
+    @GetMapping("/addOPP")
+    public String addOutPutPro(Model model, OutputProductDto outputProductDto) {
 
         outPutService.addOutPutPro(outputProductDto);
-          return "redirect:/output/outputOperation";
-      }
+        return "redirect:/output/outputOperation";
+    }
+
     @PostMapping(path = "/add")
     public String addCategory(OutputDto outputDto, Model model) {
         Response response = outPutService.addOutPut(outputDto);
-
         List<Client> clients = clientService.getAll();
         model.addAttribute("clients", clients);
 
@@ -78,15 +78,14 @@ public class OutPutController {
         model.addAttribute("output", outputs);
 
         List<Product> products = productService.getAllProduct();
-        model.addAttribute("products",products);
+        model.addAttribute("products", products);
 
         List<OutputProduct> allOutPutProduct = outPutService.getAllOutPutProduct();
-        model.addAttribute("outPutProList",allOutPutProduct);
+        model.addAttribute("outPutProList", allOutPutProduct);
 
         model.addAttribute("massage", response);
         return "redirect:/warehouse/output";
     }
-
 
     @GetMapping("/edite/{id}")
     public String editeOutPut(@PathVariable Integer id, Model model) {

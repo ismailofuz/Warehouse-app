@@ -32,7 +32,6 @@ public class ClientController {
         List<Client> chooseList = clients.stream().filter(Client::isActive).collect(Collectors.toList());
         model.addAttribute("clientChoose",chooseList);
 
-
         if(clients.isEmpty()){
             model.addAttribute("message",new Response("Not found any client",false));
         }else
@@ -54,7 +53,7 @@ public class ClientController {
 
 
     @GetMapping(path = "/edite/{id}")
-    public String editeCategory(@PathVariable Integer id, Model model){
+    public String editeClient(@PathVariable Integer id, Model model){
 
         Client client= clientService.getClientByID(id);
         List<Client> clients=clientService.getAll();

@@ -70,7 +70,6 @@ public class CategoryController {
         model.addAttribute("message", new Response());
         return "/category/editeCategory";
     }
-
     @PostMapping(path = "/edite/{id}")
     public String updateCategory(Category category, Model model) {
         Response response = categoryService.updateCategory(category);
