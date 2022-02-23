@@ -30,8 +30,7 @@ public class Output {
     private Currency currency;
     @ManyToOne
     private Client client;
-    @JsonIgnore
-    @OneToMany(mappedBy = "output",cascade = CascadeType.ALL)
-    @ToString.Exclude
-    private List<OutputProduct> outputProduct;
+    @OneToMany
+    private List <OutputProduct> outputProduct ;
+
 }

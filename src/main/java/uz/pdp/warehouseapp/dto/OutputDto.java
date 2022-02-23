@@ -8,6 +8,7 @@ import uz.pdp.warehouseapp.entity.Warehouse;
 import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -21,4 +22,5 @@ public class OutputDto {
     private Integer currencyId;
     private Integer clientId;
 
+    private List<OutputProductDto> outputProductDtoList;
 }

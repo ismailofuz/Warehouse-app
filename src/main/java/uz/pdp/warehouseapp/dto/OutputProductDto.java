@@ -13,10 +13,8 @@ import javax.persistence.*;
 @ToString
 
 public class OutputProductDto {
-    private Integer id;
     private Integer amount;
     private double price;
-    private Integer outputId;
     private Integer productId;
 
 }
