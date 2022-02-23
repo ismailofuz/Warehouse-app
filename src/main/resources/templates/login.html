@@ -9,16 +9,76 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
           crossorigin="anonymous" />
+    <style>
+        body, html {
+            height: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .bg-img {
+            /* The image used */
+            background-image: url("/images/khaby.png");
+
+            min-height: 650px;
+
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Add styles to the form container */
+        .container {
+            position: absolute;
+            right: 0;
+            margin: 20px;
+            max-width: 300px;
+            padding: 16px;
+            background-color: white;
+        }
+
+        /* Full-width input fields */
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            border: none;
+            background: #f1f1f1;
+        }
+
+        input[type=text]:focus, input[type=password]:focus {
+            background-color: #fff;
+            outline: none;
+        }
+
+        /* Set a style for the submit button */
+        .btn {
+            background-color: #04AA6D;
+            color: white;
+            padding: 16px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            opacity: 0.9;
+        }
+
+        .btn:hover {
+            opacity: 1;
+        }
+    </style>
+
 </head>
 <body>
-<div class="container-fluid text-center">
+<div class="bg-img">
 
-    <div>
-        <img class="img-fluid" th:src="@{/resources/images/Warehouse.png}"/>
-    </div>
-    <form th:action="@{/login}" method="post" style="max-width: 350px; margin: 0 auto;">
+    <form th:action="@{/login} " class="bg-img" method="post" style="max-width: 350px; margin:  auto;">
         <br>
-        <h2>Welcome to Warehouse</h2>
+        <h2 >Welcome to Warehouse</h2>
         <br>
 
         <div th:if="${param.error}">
@@ -34,8 +94,8 @@
         </div>
 
 
-        <div class="border border-secondary p-3 rounded">
-            <p>Access to Warehouse Control Panel</p>
+        <div class="border border-secondary p-1 rounded">
+            <h5>Access to Warehouse Control Panel</h5>
             <p>
                 <input type="email" name="email" class="form-control" placeholder="E-mail" required autofocus/>
             </p>
