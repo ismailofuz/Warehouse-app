@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+         <div style="max-width: 900px">
+        <div th:if="${message.isSuccess()!=true}" class="alert-success alert-danger h5 text-center"
+             th:text="${message.getMessage()}" style="text-align: center"></div>
+        <div th:unless="${message.isSuccess()!=true}" class="alert-success h5 text-center"
+             th:text="${message.getMessage()}"></div>
+    </div>
+
+    </div>
+</div>
+</body>
+</html>
