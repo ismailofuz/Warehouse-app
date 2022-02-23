@@ -31,6 +31,7 @@ public class Output {
     @ManyToOne
     private Client client;
     @JsonIgnore
-    @OneToMany(mappedBy = "output")
+    @OneToMany(mappedBy = "output",cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<OutputProduct> outputProduct;
 }
