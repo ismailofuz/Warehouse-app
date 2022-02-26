@@ -39,7 +39,7 @@ public class UserController {
         Response response = userService.setdCodeForRemember(email);
         model.addAttribute("userDto", new UserDTO());
         model.addAttribute("message", response);
-        return "login";
+        return "/user/login";
 
     }
 
@@ -67,6 +67,7 @@ public class UserController {
     public String register(@PathVariable String email, Model model,
                            @ModelAttribute("code") String code) {
         Response response = userService.checkVerificationCode(email, code);
+
         if (response.isSuccess()) {
             model.addAttribute("message", response);
             return "dashboard";
