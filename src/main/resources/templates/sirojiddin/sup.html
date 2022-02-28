@@ -81,7 +81,7 @@
         <div class="col-md-7 container-fluid m-2">
             <table class="table" style="max-width: 900px; background-color: #5cefde">
                 <div style="max-width: 900px" class="form-control">
-                    <div th:if="${message.isSuccess()!=true}" class="alert-success alert-danger h5 text-center" th:text="${message.getMessage()}" style="text-align: center; color: #e05858"></div>
+                    <div th:if="${message.isSuccess()!=true}" class="alert-success alert-danger h5 text-center" th:text="${message.getMessage()}" style="color: #e05858; text-align: center; background-color: khaki";  th:class="form-control"></div>
                     <h4><div th:unless="${message.isSuccess()!=true}" class="alert-success h4 text-center" th:text="${message.getMessage()}" style="color: #e05858; text-align: center; background-color: khaki";  th:class="form-control" ></div></h4>
                 </div>
                 <thead class="table-dark">
