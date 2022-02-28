@@ -2,7 +2,6 @@ package uz.pdp.warehouseapp.service;
 
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
-import uz.pdp.warehouseapp.db.EmailInformation;
 import uz.pdp.warehouseapp.dto.Response;
 import uz.pdp.warehouseapp.dto.UserDTO;
 import uz.pdp.warehouseapp.entity.Email;

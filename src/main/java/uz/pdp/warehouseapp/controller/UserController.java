@@ -24,8 +24,8 @@ public class UserController {
         if (response.isSuccess())
             return "dashboard";
         else
-            model.addAttribute("userDto", new UserDTO());
-        return "login";
+
+        return "redirect:/";
     }
 
     @GetMapping(path = "/code")

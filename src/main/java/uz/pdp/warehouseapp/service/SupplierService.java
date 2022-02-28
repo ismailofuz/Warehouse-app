@@ -86,4 +86,8 @@ public class SupplierService {
         supplierRepository.deleteById(id);
         return new Response("Deleted", true);
     }
+
+    public List<Supplier> getOnlyActive() {
+        return supplierRepository.getOnlyActive();
+    }
 }
