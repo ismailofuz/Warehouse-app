@@ -18,7 +18,7 @@ public class SupplierController {
     @Autowired
     SupplierService supplierService;
 
-    @GetMapping("/get")
+    @GetMapping()
     public String getAll(Model model) {
         model.addAttribute("supplierDTO", new SupplierDTO());
         List<Supplier> supplier = supplierService.getAll();
@@ -77,7 +77,7 @@ public class SupplierController {
             chooseList.remove(supplier);
             model.addAttribute("supplierChoose", chooseList);
             model.addAttribute("message", response);
-            return "redirect:/warehouse/supplier/get";
+            return "redirect:/warehouse/supplier";
         }
         Supplier supplierReturn = supplierService.getOne(supplier.getId());
         List<Supplier> suppliers = supplierService.getAll();

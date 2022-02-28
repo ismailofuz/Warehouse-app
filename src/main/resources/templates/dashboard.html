@@ -3,7 +3,6 @@
 <head>
     <title>Title</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"/>
 
     <style>
 
@@ -45,8 +44,14 @@
                 <option selected>Product</option>
                 <option onclick="showProduct()" >Product show</option>
                 <option onclick="product()" >Product add</option>
-                <option onclick="category()"  >Category add</option>
+                <option onclick="category()">Category add</option>
                 <option onclick="measurement()" >Measurement add</option>
+            </select>
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Input menu</option>
+                <option onclick="input()">Input add</option>
+                <option onclick="showInputs()">Show Inputs</option>
+                <option onclick="supplier()">Supplier</option>
             </select>
         </div>
     </div>
@@ -66,6 +71,18 @@
 
     function showProduct() {
         window.location = "[[@{/warehouse/product/show}]]";
+    }
+
+</script>
+<script type="text/javascript">
+          function supplier() {
+        window.location = "[[@{/warehouse/supplier}]]";
+    }
+         function input() {
+        window.location = "[[@{/warehouse/input}]]";
+    }
+            function showInputs() {
+        window.location = "[[@{/warehouse/input/show}]]";
     }
 </script>
 </body>
