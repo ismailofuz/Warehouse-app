@@ -2,6 +2,7 @@ package uz.pdp.warehouseapp.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +55,7 @@ public class ProductService {
                 for (MultipartFile multipartFile : attachment) {
                     try {
                         byte[] bytes = multipartFile.getBytes();
-                        String originalFilename =LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))+ multipartFile.getOriginalFilename();
+                        String originalFilename =LocalDateTime.now()+ multipartFile.getOriginalFilename();
                         String contentType = multipartFile.getContentType();
                         long size = multipartFile.getSize();
                         Attachment attachmentNew=new Attachment(originalFilename,size,contentType);
@@ -96,18 +97,28 @@ public class ProductService {
     public Page<Product> getAll(PageRequest pageRequest) {
         return productRepository.findAll(pageRequest);
     }
+    public List<Product>getAllProduct(){
+        return productRepository.findAll();
+    }
 
-    public List<ResponseEntity<?>> getPhotos(Integer id) {
-   List<ResponseEntity<?>>photos=new ArrayList<>();
+
+    public Response getById(Integer id) {
+        Response response=new Response();
         Optional<Product> byId = productRepository.findById(id);
         if (byId.isPresent()) {
-            Product product = byId.get();
-            List<Attachment> attachments = product.getAttachments();
-            for (Attachment attachment : attachments) {
-                AttachmentContent byAttachment = attachmentContentRepository.findByAttachment(attachment);
-                photos.add(ResponseEntity.ok().contentType(MediaType.valueOf(attachment.getContentType())).header(HttpHeaders.CONTENT_DISPOSITION,attachment.getName()).body(byAttachment.getBytes()));
-            }
-        }
-        return photos;
+            response.setSuccess(true);
+            response.setObject(byId.get());
+            return response;
+        }else
+            response.setMessage("Not found product");
+        response.setSuccess(false);
+        return response;
+    }
+
+    public HttpEntity<?> getPhoto(Integer id) {
+        Attachment attachment = attachmentRepository.getById(id);
+        AttachmentContent content = attachmentContentRepository.findByAttachment(attachment);
+        return ResponseEntity.ok().contentType(MediaType.valueOf(attachment.getContentType())).
+                header(HttpHeaders.CONTENT_DISPOSITION,"photo").body(content.getBytes());
     }
 }

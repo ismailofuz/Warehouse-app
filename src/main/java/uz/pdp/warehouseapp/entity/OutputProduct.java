@@ -3,6 +3,7 @@ package uz.pdp.warehouseapp.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,9 +19,10 @@ public class OutputProduct {
     private Integer amount;
     @Column(nullable = false)
     private double price;
-    @ManyToOne
-    private Output output;
+//    @ManyToOne
+//    private Output output;
     @ManyToOne
     private Product product;
+
 
 }

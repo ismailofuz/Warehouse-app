@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import uz.pdp.warehouseapp.dto.ProductDto;
 import uz.pdp.warehouseapp.dto.Response;
+import uz.pdp.warehouseapp.entity.Attachment;
 import uz.pdp.warehouseapp.entity.Category;
 import uz.pdp.warehouseapp.entity.Measurement;
 import uz.pdp.warehouseapp.entity.Product;
@@ -17,6 +18,7 @@ import uz.pdp.warehouseapp.service.ProductService;
 import uz.pdp.warehouseapp.util.Constants;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -72,17 +74,20 @@ public class ProductController {
             page=page-1;
         }
        Page<Product>products= productService.getAll(PageRequest.of(page,size));
-        System.out.println("products.getTotalElements() = " + products.getTotalElements());
         if (products.getTotalElements()==0){
             model.addAttribute("message",new Response("Not found any product",false));
+        }else {
+              model.addAttribute("message",new Response());
         }
         int totalPages = products.getTotalPages();
         if(totalPages>0){
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
             model.addAttribute("pageNumbers",pageNumbers);
+        }else {
+            List<Integer> pageNumbers = new ArrayList<>();
+            model.addAttribute("pageNumbers",pageNumbers);
         }
         List<Product>content = products.getContent();
-        model.addAttribute("message",new Response());
         model.addAttribute("products",content);
         int pageNumber = products.getPageable().getPageNumber();
         model.addAttribute("currentPage",pageNumber);
@@ -90,8 +95,26 @@ public class ProductController {
     }
     @GetMapping(path = "/show/{id}")
     public String showPeoductById(@PathVariable Integer id,Model model){
-        List<ResponseEntity<?>>photos=productService.getPhotos(id);
-        model.addAttribute("photos",photos);
+      Response response=productService.getById(id);
+      if(response.isSuccess()){
+       Product product= (Product) response.getObject();
+          List<Integer> attachmentIds = product.getAttachments().stream().map(Attachment::getId).collect(Collectors.toList());
+          Integer integer = attachmentIds.get(0);
+          model.addAttribute("attachmentId",integer);
+          List<Integer>news=new ArrayList<>();
+          for (int i = 0; i < attachmentIds.size(); i++) {
+              if(i>0){
+                  news.add(attachmentIds.get(i));
+              }
+          }
+           model.addAttribute("attachmentIds",news);
+          model.addAttribute("product",product);
+      }
+          model.addAttribute("message",response);
         return "product/showProductById";
+    }
+    @GetMapping(path = "/attachment/{id}")
+    public HttpEntity<?> download(@PathVariable Integer id){
+        return productService.getPhoto(id);
     }
 }
