@@ -16,6 +16,6 @@ public class Main {
     public String loginPage(Model model){
         model.addAttribute("userDto",new UserDTO());
         model.addAttribute("message",new Response());
-        return "login";
+        return "/user/login";
     }
 }

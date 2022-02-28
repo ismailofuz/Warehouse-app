@@ -74,7 +74,7 @@ public class CategoryService {
         return response;
     }
 
-    public Response deleteMeasurement(Integer id) {
+    public Response deleteCategory(Integer id) {
         Response response=new Response();
         Optional<Category> byId = categoryRepository.findById(id);
         if (byId.isPresent()) {

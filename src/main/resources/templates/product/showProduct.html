@@ -8,9 +8,31 @@
 <body>
 <div class="container-fluid">
    <div class="row">
-       <div class="col-md-3"></div>
-       <div class="col-md-8">
-           <div style="max-width: 900px">
+              <div class="col-md-2">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Product</option>
+                <option onclick="product()">Product add</option>
+                <option onclick="category()">Category add</option>
+                <option onclick="measurement()">Measurement add</option>
+            </select>
+            <script type="text/javascript">
+                function product() {
+                    window.location = "[[@{/warehouse/product}]]";
+                }
+
+                function category() {
+                    window.location = "[[@{/warehouse/category}]]";
+                }
+
+
+                function measurement() {
+                    window.location = "[[@{/warehouse/measurement}]]";
+                }
+
+            </script>
+        </div>
+       <div class="col-md-9">
+           <div style="max-width: 1400px">
                <div th:if="${message.isSuccess()!=true}" class="alert-success alert-danger h5 text-center" th:text="${message.getMessage()}" style="text-align: center"></div>
                <div th:unless="${message.isSuccess()!=true}" class="alert-success h5 text-center" th:text="${message.getMessage()}"></div>
            </div>
@@ -47,7 +69,6 @@
                    </div>
                </div>
            </div>
-
        </div>
    </div>
 </div>
