@@ -20,7 +20,7 @@ public class Warehouse {
     private boolean active=true;
     @ManyToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
-    private List<User>users;
+    private List<User> users;
 
 
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uz.pdp.warehouseapp.entity.Currency;
 import uz.pdp.warehouseapp.entity.User;
-import uz.pdp.warehouseapp.service.CurrencyNotFoundExaption;
+import uz.pdp.warehouseapp.service.CurrencyNotFoundException;
 import uz.pdp.warehouseapp.service.CurrencyService;
 import uz.pdp.warehouseapp.service.UserNotFoundExaption;
 
@@ -21,10 +21,11 @@ import java.util.List;
 public class CurrencyController {
     @Autowired
     CurrencyService currencyService;
+
     @GetMapping
     public String showUserList(Model model) {
-        List<Currency> listUsers = currencyService.listAll();
-        model.addAttribute("listCurrency", listUsers);
+        List<Currency> listCurrency = currencyService.listAll();
+        model.addAttribute("listCurrency", listCurrency);
         return "currency";
     }
 
@@ -47,23 +48,23 @@ public class CurrencyController {
         try {
             Currency currency = currencyService.get(id);
             model.addAttribute("currency", currency);
-            model.addAttribute("pageTitle", "Edit User (ID: " + id + ")");
+            model.addAttribute("pageTitle", "Edit Warehouse (ID: " + id + ")");
             return "currency_form";
-        } catch (CurrencyNotFoundExaption e) {
+        } catch (CurrencyNotFoundException e) {
             redirectAttributes.addFlashAttribute("message", "The Currency has been saved successfully");
             return "redirect:/currency";
         }
     }
+
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         try {
             currencyService.delete(id);
-            redirectAttributes.addFlashAttribute("message","The Currency ID " + id + " has been deleted.");
+            redirectAttributes.addFlashAttribute("message", "The Currency ID " + id + " has been deleted.");
 
-        } catch (UserNotFoundExaption e) {
-            redirectAttributes.addFlashAttribute("message",e.getMessage());
+        } catch (CurrencyNotFoundException e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
         return "redirect:/currency";
     }
-
 }

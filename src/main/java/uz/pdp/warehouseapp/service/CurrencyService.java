@@ -20,17 +20,18 @@ public class CurrencyService {
         currencyRepository.save(currency);
     }
 
-    public Currency get(Integer id) throws CurrencyNotFoundExaption {
+    public Currency get(Integer id) throws CurrencyNotFoundException {
         Optional<Currency> byId = currencyRepository.findById(id);
         if(byId.isPresent()){
             return byId.get();
         }
-        throw new CurrencyNotFoundExaption("Could not find any currency with ID "+id);
+        throw new CurrencyNotFoundException("Could not find any currency with ID "+id);
     }
-    public void delete(Integer id) throws UserNotFoundExaption {
+
+    public void delete(Integer id) throws CurrencyNotFoundException {
         Long count = currencyRepository.countById(id);
         if (count==null || count == 0){
-            throw new UserNotFoundExaption("Could not find any users with ID "+id);
+            throw new CurrencyNotFoundException("Could not find any currency with ID "+id);
         }
         currencyRepository.deleteById(id);
     }

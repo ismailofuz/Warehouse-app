@@ -14,6 +14,6 @@ import java.util.List;
 public class WarehouseDto {
     private String name;
     private boolean active;
-    private List<Integer> userList;
+    private List<Integer> userId;
 
 }
