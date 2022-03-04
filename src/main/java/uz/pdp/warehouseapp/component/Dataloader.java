@@ -13,9 +13,9 @@ import java.util.Properties;
 
 @Component
 public class Dataloader implements CommandLineRunner {
-    @Value("${spring.jpa.hibernate.ddl-auto}")
-    private String ddl;
-    final UserRepository userRepository;
+@Value("${spring.jpa.hibernate.ddl-auto}")
+private String ddl;
+final UserRepository userRepository;
 
     public Dataloader(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -23,17 +23,12 @@ public class Dataloader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if ("create".contains(ddl) || "create-drop".contains(ddl)) {
-            User user = new User("Javokhirbek", "Rakhimov", "+998997834961",
-                    "javohirbekrakhimov@gmail.com", "997834961");
-            user.setCode("WZ:0001");
-
-            user = new User("G'ayratjon", "Kamolov", "+9989781396363",
-                    "gayratjonkamolov96@gmail.com", "978139363");
-            user.setCode("WZ:0003");
-
-            userRepository.save(user);
-        }
+       if("create".contains(ddl)||"create-drop".contains(ddl)){
+           User user=new User("Javokhirbek","Rakhimov","+998997834961",
+                   "javohirbekrakhimov@gmail.com","997834961");
+           user.setCode("WZ:0001");
+           userRepository.save(user);
+       }
     }
 
     @Bean
